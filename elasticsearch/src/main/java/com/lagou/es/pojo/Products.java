@@ -1,13 +1,25 @@
 package com.lagou.es.pojo;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
+/**
+ * - 新建索引库lagou，类型名称为product，Mapping要求：
+ * - name：   "type": "text","analyzer": "ik_max_word"
+ * - goods_desc： "type": "text","analyzer": "ik_max_word"
+ * - 其它映射关系学员根据数据类型、需求场景自行定义。
+ */
 @Data
-@Document(indexName = "lagou", type = "product", shards = 1, replicas = 1)
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Document(indexName = "lagou", type = "product", shards = 1, replicas = 1) //索引库名称lagou，类型名称product
 public class Products {
 
     @Id

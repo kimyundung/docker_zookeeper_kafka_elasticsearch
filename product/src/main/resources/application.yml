@@ -4,22 +4,22 @@ server:
 spring:
   application:
     name: service-product
-  datasource:
-    url: jdbc:mysql://113.31.144.141/lagou_9_2?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+  datasource: #数据库配置
+    url: jdbc:mysql://113.31.144.141:3306/lagou_9_2?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
     username: root
     password: root
   kafka:
-    bootstrap-servers: kafka1:9092,kafka2:9093,kafka3:9094
+    bootstrap-servers: kafka1:9092,kafka2:9093,kafka3:9094 #kafka集群
     producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer #key序列化
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer #value序列化
   data:
     elasticsearch:
-      cluster-name: docker-cluster
-      cluster-nodes: 113.31.144.141:9300
+      cluster-name: docker-cluster #es集群名
+      cluster-nodes: 113.31.144.141:9300 #集群节点
   elasticsearch:
     rest:
-      uris: http://113.31.144.141:9200
+      uris: http://113.31.144.141:9200 #默认是localhost:9200
 
 
 #映射配置文件

@@ -1,5 +1,6 @@
 package com.lagou.es.index;
 
+import com.lagou.es.mapper.ProductMapper;
 import com.lagou.es.pojo.Products;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

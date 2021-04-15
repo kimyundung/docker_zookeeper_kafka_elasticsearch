@@ -4,13 +4,26 @@ server:
 spring:
   application:
     name: service-es
+  datasource:
+    url: jdbc:mysql://113.31.144.141:3306/lagou_9_2?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+    username: root
+    password: root
   data:
     elasticsearch:
       cluster-name: docker-cluster
       cluster-nodes: 113.31.144.141:9300
   kafka:
-    bootstrap-servers: 106.75.253.40:9092,106.75.253.40:9093,106.75.253.40:9094
+    bootstrap-servers: 106.75.253.40:9092,106.75.253.40:9093,106.75.253.40:9094 #kafka集群
     consumer:
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer #key反序列化
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer #value反序列化
       group-id: productId
+
+#映射配置文件
+mybatis:
+  mapper-locations: classpath:com/lagou/es/mapper/*.xml  #配置MyBatis的xml配置文件路径
+  type-aliases-package: com.lagou.es.pojo                    #配置XML映射文件中指定的实体类别名路径
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: false # 数据库下划线自动转驼峰标示关闭

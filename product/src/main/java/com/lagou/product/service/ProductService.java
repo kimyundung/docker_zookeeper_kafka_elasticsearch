@@ -16,18 +16,11 @@ public interface ProductService {
     public Integer createProduct(Products products);
 
     /**
-     * 名称查询(索引) 方法1
-     * @param name
+     * 名称查询(索引)
+     * @param queryInfo
      * @return
      */
-    public List<Products> queryByName(String name, Integer pagenow);
-
-    /**
-     * 名称查询(索引) 方法2
-     * @param name
-     * @return
-     */
-    public List<Products> queryByName2(QueryInfo queryInfo);
+    public List<Products> queryByName(QueryInfo queryInfo);
 
     /**
      * 测试用的

@@ -1,18 +1,13 @@
 package com.lagou.product.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.fasterxml.jackson.annotation.JsonAlias;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.lagou.product.common.Products;
 import com.lagou.product.common.QueryInfo;
 import com.lagou.product.service.ProductService;
-import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.concurrent.Future;
 
 @RestController
 @RequestMapping("/product")
@@ -34,34 +29,23 @@ public class ProductController {
         Integer i = productService.createProduct(products);
         System.out.println("<<<<<<<<<<<<<< " + products.getId());
         //2 生产消息(商品id)
+        //  主题名
         String topic = "product";
-        String productsString = JSON.toJSONString(products);
-        kafkaTemplate.send(topic, productsString);
+        //  通过kafkaTemplate,发送商品id到Kafka的product主题中
+        kafkaTemplate.send(topic, products.getId().toString());
 
         return i==1? "success": "fail";
     }
 
     /**
-     * 名称查询(索引)
-     * @param name
-     * @return
-     */
-    @GetMapping("/query")
-    public List<Products> queryByName(String name, Integer pagenow){
-        System.out.println(">>>>>>>>>>>>>>> "+ name + " " + pagenow);
-        List<Products> products = productService.queryByName(name, pagenow);
-        return products;
-    }
-
-    /**
-     * 名称查询(索引) 方法2
+     * 名称查询(索引) 方法
      * @param queryInfo
      * @return
      */
-    @GetMapping("/query2")
-    public List<Products> queryByName2(QueryInfo queryInfo){
+    @GetMapping("/query")
+    public List<Products> queryByName(QueryInfo queryInfo){
         System.out.println(">>>>>>>>>>>>>>> "+ queryInfo);
-        List<Products> products = productService.queryByName2(queryInfo);
+        List<Products> products = productService.queryByName(queryInfo);
         return products;
     }
 

@@ -51,8 +51,6 @@ public class ESSearchResultMapper implements SearchResultMapper {
             // map -> jsonString -> 对象
             String s = JSON.toJSONString(map);
             T t = JSON.parseObject(s, aClass);
-            //Gson gson = new Gson();
-            //T t = gson.fromJson(gson.toJson(map), aClass);
             list.add(t);
         }
         return new AggregatedPageImpl<>(list,pageable,totalHits);

@@ -38,82 +38,47 @@ public class ProductServiceImpl implements ProductService {
     }
 
     /**
-     * 名字查询(索引) 方法1
-     * - 查询条件：name
-     * - 分页查询：每页5条
-     * - 排序规则：price，升序
-     * 结果过滤：商品价格范围过滤
-     * - 实现高亮效果
-     * @param name
-     * @param pagenow
-     * @return
-     */
-    @Override
-    public List<Products> queryByName(String name, Integer pagenow) {
-        NativeSearchQueryBuilder queryBuilder = new NativeSearchQueryBuilder();
-        queryBuilder.withSourceFilter(new FetchSourceFilter(new String[0], new String[0]));
-        // 查询条件:name
-        queryBuilder.withQuery(QueryBuilders.matchQuery("name",name));
-        // 分页查询:每页5条
-        // 排序规则：price，升序
-        queryBuilder.withPageable(PageRequest.of(pagenow-1,5, Sort.by(Sort.Direction.ASC, "price")));
-        // 高亮
-        queryBuilder.withHighlightBuilder(new HighlightBuilder().field("name"));
-        HighlightBuilder.Field field = new HighlightBuilder.Field("name").preTags("<font style='color:red'>").postTags("</font>");
-        queryBuilder.withHighlightFields(field); // 名字高亮
-        NativeSearchQuery build = queryBuilder.build();
-        // 查询+高亮
-        AggregatedPage<Products> results = esTemplate.queryForPage(queryBuilder.build(), Products.class, new ESSearchResultMapper());
-        List<Products> productList = results.getContent();
-        System.out.println(">>>>>>>>>>>>>>>> " + productList);
-        return productList;
-    }
-
-    /**
      *
-     * 名字查询(索引) 方法2
+     * 名字查询(索引)
      * - 查询条件：name
      * - 分页查询：每页5条
      * - 排序规则：price，升序
-     * 结果过滤：商品价格范围过滤
+     * - 结果过滤：商品价格范围过滤
      * - 实现高亮效果
      * @param queryInfo
      * @return
      */
     @Override
-    public List<Products> queryByName2(QueryInfo queryInfo) {
+    public List<Products> queryByName(QueryInfo queryInfo) {
+        // name, pagenum, price 都不为null时
         if(queryInfo.getName()!=null && queryInfo.getPagenum()!=null && queryInfo.getStartprice()!=null && queryInfo.getEndprice()!=null){
-
+            // 获取原生查询器
             NativeSearchQueryBuilder queryBuilder = new NativeSearchQueryBuilder();
+            // 全部field
             queryBuilder.withSourceFilter(new FetchSourceFilter(new String[0], new String[0]));
-            // 查询条件:name
+            // 查询条件:name + 结果过滤：商品价格范围过滤
             BoolQueryBuilder boolQueryBuilder = new BoolQueryBuilder();
             boolQueryBuilder.must(QueryBuilders.matchQuery("name",queryInfo.getName()));
             boolQueryBuilder.filter(QueryBuilders.rangeQuery("price").gte(queryInfo.getStartprice()));
             boolQueryBuilder.filter(QueryBuilders.rangeQuery("price").lte(queryInfo.getEndprice()));
             queryBuilder.withQuery(boolQueryBuilder);
-            // 分页查询:每页5条
-            // 排序规则：price，升序
+            // 分页查询:每页5条 + 排序规则：price，升序
             queryBuilder.withPageable(PageRequest.of(queryInfo.getPagenum()-1,5, Sort.by(Sort.Direction.ASC, "price")));
             // 高亮
             queryBuilder.withHighlightBuilder(new HighlightBuilder().field("name"));
             HighlightBuilder.Field field = new HighlightBuilder.Field("name").preTags("<font style='color:red'>").postTags("</font>");
-            queryBuilder.withHighlightFields(field); // 名字高亮
-            NativeSearchQuery build = queryBuilder.build();
+            queryBuilder.withHighlightFields(field);
             // 查询+高亮
             AggregatedPage<Products> results = esTemplate.queryForPage(queryBuilder.build(), Products.class, new ESSearchResultMapper());
             List<Products> productList = results.getContent();
-            System.out.println(">>>>>>>>>>>>>>>> " + productList);
+            // 响应数据
             return productList;
-
-
-
         }
         return null;
     }
 
     /**
-     * 根据ID查询
+     * 根据ID查询(测试用)
      * @param id
      * @return
      */
