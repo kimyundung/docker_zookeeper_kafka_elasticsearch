@@ -1,6 +1,7 @@
 package com.lagou.es;
 
 import com.lagou.es.pojo.Products;
+import com.lagou.product.service.ProductService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ public class EsApplicationTest {
 
     @Autowired
     private ElasticsearchTemplate template;
+
 
     /**
      * 新建索引库lagou，类型名称为product，Mapping要求：

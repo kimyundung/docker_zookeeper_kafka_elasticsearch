@@ -1,12 +1,14 @@
 package com.lagou.es.pojo;
 
 import lombok.Data;
+import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
 @Data
+@ToString
 @Document(indexName = "lagou", type = "product", shards = 1, replicas = 1)
 public class Products {
 

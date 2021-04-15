@@ -14,3 +14,6 @@ spring:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       group-id: productId
+  cloud:
+    zookeeper:
+      connect-string: zoo1:2184

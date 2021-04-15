@@ -17,7 +17,6 @@ public class ProductConsumer {
     public void productId(ConsumerRecord<String, String> record){
         System.out.println("简单消费："+record.topic()+"-"+record.partition()+"-"+record.value());
         Products products = JSON.parseObject(record.value(), Products.class);
-        System.out.println(">>>>>>>>>>> " + products);
         addDocument.addDocument(products);
     }
 }

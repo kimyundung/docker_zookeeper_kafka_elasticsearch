@@ -24,7 +24,7 @@ public interface ProductService {
 
     /**
      * 名称查询(索引) 方法2
-     * @param name
+     * @param queryInfo
      * @return
      */
     public List<Products> queryByName2(QueryInfo queryInfo);

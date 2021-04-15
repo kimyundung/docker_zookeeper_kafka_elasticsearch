@@ -20,6 +20,9 @@ spring:
   elasticsearch:
     rest:
       uris: http://113.31.144.141:9200
+  cloud:
+    zookeeper:
+      connect-string: zoo1:2184
 
 
 #映射配置文件
