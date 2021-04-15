@@ -1,0 +1,30 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: service-product
+  datasource:
+    url: jdbc:mysql://113.31.144.141/lagou_9_2?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+    username: root
+    password: root
+  kafka:
+    bootstrap-servers: kafka1:9092,kafka2:9093,kafka3:9094
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+  data:
+    elasticsearch:
+      cluster-name: docker-cluster
+      cluster-nodes: 113.31.144.141:9300
+  elasticsearch:
+    rest:
+      uris: http://113.31.144.141:9200
+
+
+#映射配置文件
+mybatis:
+  mapper-locations: classpath:com/lagou/products/mapper/*.xml  #配置MyBatis的xml配置文件路径
+  type-aliases-package: com.lagou.products.common                    #配置XML映射文件中指定的实体类别名路径
+#  configuration:
+#    map-underscore-to-camel-case: true                      #驼峰命名

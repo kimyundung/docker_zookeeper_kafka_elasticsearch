@@ -1,0 +1,16 @@
+server:
+  port: 8887
+
+spring:
+  application:
+    name: service-es
+  data:
+    elasticsearch:
+      cluster-name: docker-cluster
+      cluster-nodes: 113.31.144.141:9300
+  kafka:
+    bootstrap-servers: 106.75.253.40:9092,106.75.253.40:9093,106.75.253.40:9094
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      group-id: productId
